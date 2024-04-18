@@ -44,6 +44,7 @@ public class Table {
 
     public List<JSONObject> select(Where... where) {
         List<JSONObject> list = new ArrayList<>();
+        List<JSONObject> remove = new ArrayList<>();
         JSONObject fullData = new JSONObject(this.dataTable.toString());
 
         if (where.length == 0) {
@@ -54,24 +55,74 @@ public class Table {
         }
 
         for (Where wh : where) {
-            switch (wh.getOperator()) {
-                case "=":
-                    for (String keyData : fullData.keySet()) {
-                        JSONObject row = fullData.getJSONObject(keyData);
-
-                        if (wh.getValue().equals(row.get(wh.getField()))) {
-                            if (!list.contains(row)) {
-                                list.add(row);
+            switch (wh.getCondition()) {
+                case "AND":
+                    switch (wh.getOperator()) {
+                        case "=":
+                            for (JSONObject row : list) {
+                                if (!wh.getValue().equals(row.get(wh.getField()))) {
+                                    if (!remove.contains(row)) {
+                                        remove.add(row);
+                                    }
+                                }
                             }
-                        }
+                            break;
+                        case "<":
+                            break;
+                        case ">":
+                            break;
+                        default:
+                            break;
                     }
                     break;
-                case "<":
+                case "OR":
+                    switch (wh.getOperator()) {
+                        case "=":
+                            for (String keyData : fullData.keySet()) {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().equals(row.get(wh.getField()))) {
+                                    if (!list.contains(row)) {
+                                        list.add(row);
+                                    }
+                                }
+                            }
+                            break;
+                        case "<":
+                            break;
+                        case ">":
+                            break;
+                        default:
+                            break;
+                    }
                     break;
-                case ">":
+                default:
+                    switch (wh.getOperator()) {
+                        case "=":
+                            for (String keyData : fullData.keySet()) {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().equals(row.get(wh.getField()))) {
+                                    if (!list.contains(row)) {
+                                        list.add(row);
+                                    }
+                                }
+                            }
+                            break;
+                        case "<":
+                            break;
+                        case ">":
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
         }
+
+        remove.forEach((row) -> {
+            list.remove(row);
+        });
 
         return list;
     }

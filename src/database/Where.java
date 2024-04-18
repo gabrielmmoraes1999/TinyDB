@@ -6,7 +6,9 @@ package database;
  */
 public class Where {
 
+    private final Where[] vector = new Where[2];
     private final String field;
+    private String condition;
     private String operator;
     private Object value;
 
@@ -14,6 +16,7 @@ public class Where {
         this.operator = null;
         this.field = field;
         this.value = null;
+        this.condition = "";
     }
 
     public Where equalThan(Object value) {
@@ -34,6 +37,22 @@ public class Where {
         return this;
     }
 
+    public Where[] and(Where where) {
+        this.vector[0] = this;
+        
+        where.setCondition("AND");
+        this.vector[1] = where;
+        return vector;
+    }
+    
+    public Where[] or(Where where) {
+        this.vector[0] = this;
+        
+        where.setCondition("OR");
+        this.vector[1] = where;
+        return vector;
+    }
+
     public String getField() {
         return field;
     }
@@ -52,6 +71,14 @@ public class Where {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
     @Override

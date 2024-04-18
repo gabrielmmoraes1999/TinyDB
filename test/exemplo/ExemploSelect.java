@@ -24,8 +24,7 @@ public class ExemploSelect {
         List<JSONObject> js = table.select();
         System.out.println(js);
 
-        js = table.select(new Where("CODIGO").equalThan(1));
-
+        js = table.select(new Where("CODIGO").equalThan(1).and(new Where("NOME").equalThan("GABRIEL MORAES")));
         System.out.println(js);
     }
 
