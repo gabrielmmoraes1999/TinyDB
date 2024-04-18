@@ -16,19 +16,19 @@ public class Where {
         this.value = null;
     }
 
-    public Where equal(Object value) {
+    public Where equalThan(Object value) {
         this.operator = "=";
         this.value = value;
         return this;
     }
 
-    public Where greater(Object value) {
+    public Where greaterThan(Object value) {
         this.operator = ">";
         this.value = value;
         return this;
     }
 
-    public Where less(Object value) {
+    public Where lessThan(Object value) {
         this.operator = "<";
         this.value = value;
         return this;
