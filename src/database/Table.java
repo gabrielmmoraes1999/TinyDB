@@ -59,13 +59,13 @@ public class Table {
                 case "AND":
                     switch (wh.getOperator()) {
                         case "=":
-                            for (JSONObject row : list) {
+                            list.forEach(row -> {
                                 if (!wh.getValue().equals(row.get(wh.getField()))) {
                                     if (!remove.contains(row)) {
                                         remove.add(row);
                                     }
                                 }
-                            }
+                            });
                             break;
                         case "<":
                             break;
@@ -78,7 +78,7 @@ public class Table {
                 case "OR":
                     switch (wh.getOperator()) {
                         case "=":
-                            for (String keyData : fullData.keySet()) {
+                            fullData.keySet().forEach(keyData -> {
                                 JSONObject row = fullData.getJSONObject(keyData);
 
                                 if (wh.getValue().equals(row.get(wh.getField()))) {
@@ -86,7 +86,7 @@ public class Table {
                                         list.add(row);
                                     }
                                 }
-                            }
+                            });
                             break;
                         case "<":
                             break;
@@ -99,7 +99,7 @@ public class Table {
                 default:
                     switch (wh.getOperator()) {
                         case "=":
-                            for (String keyData : fullData.keySet()) {
+                            fullData.keySet().forEach(keyData -> {
                                 JSONObject row = fullData.getJSONObject(keyData);
 
                                 if (wh.getValue().equals(row.get(wh.getField()))) {
@@ -107,7 +107,7 @@ public class Table {
                                         list.add(row);
                                     }
                                 }
-                            }
+                            });
                             break;
                         case "<":
                             break;
@@ -135,13 +135,13 @@ public class Table {
         for (Where wh : where) {
             switch (wh.getOperator()) {
                 case "=":
-                    for (String keyData : this.dataTable.keySet()) {
+                    this.dataTable.keySet().forEach(keyData -> {
                         JSONObject row = this.dataTable.getJSONObject(keyData);
 
                         if (wh.getValue().equals(row.get(wh.getField()))) {
                             this.dataTable.remove(keyData);
                         }
-                    }
+                    });
                     break;
                 case "<":
                     break;
