@@ -43,75 +43,33 @@ public class Table {
     }
 
     public List<JSONObject> select(Where... where) {
-        List<JSONObject> list;
+        List<JSONObject> list = new ArrayList<>();
+        JSONObject fullData = new JSONObject(this.dataTable.toString());
 
         if (where.length == 0) {
-            list = new ArrayList<>();
-            this.dataTable.keySet().forEach((key) -> {
-                list.add(this.dataTable.getJSONObject(key));
+            fullData.keySet().forEach((key) -> {
+                list.add(fullData.getJSONObject(key));
             });
             return list;
         }
 
-        list = new ArrayList<>();
-        List<String> remove = new ArrayList<>();
-        JSONObject fullData = new JSONObject(this.dataTable.toString());
-        int condition = -1;
-
         for (Where wh : where) {
-            int size = wh.getKey().size();
+            switch (wh.getOperator()) {
+                case "=":
+                    for (String keyData : fullData.keySet()) {
+                        JSONObject row = fullData.getJSONObject(keyData);
 
-            if (size >= 2) {
-                for (Integer conditio : wh.getConditions()) {
-                    condition = conditio;
-                }
-            }
-
-            switch (condition) {
-                case -1:
-                    break;
-                case Where.AND:
-                    for (String key : wh.getKey()) {
-                        int indexOf = wh.getKey().indexOf(key);
-                        Object value = wh.getValue().get(indexOf);
-
-                        for (String keyData : fullData.keySet()) {
-                            JSONObject row = fullData.getJSONObject(keyData);
-
-                            if (!value.equals(row.get(key))) {
-                                if (!remove.contains(keyData)) {
-                                    remove.add(keyData);
-                                }
+                        if (wh.getValue().equals(row.get(wh.getField()))) {
+                            if (!list.contains(row)) {
+                                list.add(row);
                             }
                         }
                     }
                     break;
-                case Where.OR:
-                    for (String key : wh.getKey()) {
-                        int indexOf = wh.getKey().indexOf(key);
-                        Object value = wh.getValue().get(indexOf);
-
-                        for (String keyData : fullData.keySet()) {
-                            JSONObject row = fullData.getJSONObject(keyData);
-                            if (value.equals(row.get(key))) {
-                                if (!list.contains(row)) {
-                                    list.add(row);
-                                }
-                            }
-                        }
-                    }
+                case "<":
                     break;
-            }
-        }
-
-        if (condition == Where.AND) {
-            for (String keyData : remove) {
-                fullData.remove(keyData);
-            }
-
-            for (String keyData : fullData.keySet()) {
-                JSONObject row = fullData.getJSONObject(keyData);
-                list.add(row);
+                case ">":
+                    break;
             }
         }
 
@@ -119,76 +77,26 @@ public class Table {
     }
 
     public void delete(Where... where) {
-        List<String> delete = new ArrayList<>();
-
         if (where.length == 0) {
             this.dataTable.clear();
         }
 
-        int condition = -1;
-
         for (Where wh : where) {
-            int size = wh.getKey().size();
+            switch (wh.getOperator()) {
+                case "=":
+                    for (String keyData : this.dataTable.keySet()) {
+                        JSONObject row = this.dataTable.getJSONObject(keyData);
 
-            if (size >= 2) {
-                for (Integer conditio : wh.getConditions()) {
-                    condition = conditio;
-                }
-            }
-
-            switch (condition) {
-                case -1:
-                    for (String key : wh.getKey()) {
-                        int indexOf = wh.getKey().indexOf(key);
-                        Object value = wh.getValue().get(indexOf);
-
-                        for (String keyData : this.dataTable.keySet()) {
-                            JSONObject row = this.dataTable.getJSONObject(keyData);
-
-                            if (value.equals(row.get(key))) {
-                                if (!delete.contains(keyData)) {
-                                    delete.add(keyData);
-                                }
-                            }
+                        if (wh.getValue().equals(row.get(wh.getField()))) {
+                            this.dataTable.remove(keyData);
                         }
                     }
                     break;
-                case Where.AND:
-                    for (String key : wh.getKey()) {
-                        int indexOf = wh.getKey().indexOf(key);
-                        Object value = wh.getValue().get(indexOf);
-
-                        for (String keyData : this.dataTable.keySet()) {
-                            JSONObject row = this.dataTable.getJSONObject(keyData);
-
-                            if (value.equals(row.get(key))) {
-                                if (!delete.contains(keyData)) {
-                                    delete.add(keyData);
-                                }
-                            }
-                        }
-                    }
+                case "<":
                     break;
-                case Where.OR:
-                    for (String key : wh.getKey()) {
-                        int indexOf = wh.getKey().indexOf(key);
-                        Object value = wh.getValue().get(indexOf);
-
-                        for (String keyData : this.dataTable.keySet()) {
-                            JSONObject row = this.dataTable.getJSONObject(keyData);
-                            if (value.equals(row.get(key))) {
-                                if (!delete.contains(keyData)) {
-                                    delete.add(keyData);
-                                }
-                            }
-                        }
-                    }
+                case ">":
                     break;
             }
-        }
-
-        for (String keyData : delete) {
-            this.dataTable.remove(keyData);
         }
     }
 

@@ -24,10 +24,7 @@ public class ExemploSelect {
         List<JSONObject> js = table.select();
         System.out.println(js);
 
-        js = table.select(new Where(
-                "CODIGO", 1,
-                Where.AND,
-                "USUARIO", "GABRIEL_MORAES"));
+        js = table.select(new Where("CODIGO").equal(2));
 
         System.out.println(js);
     }

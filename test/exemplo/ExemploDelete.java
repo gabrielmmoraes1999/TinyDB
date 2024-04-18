@@ -18,7 +18,7 @@ public class ExemploDelete {
     public static void main(String[] args) throws IOException {
         MoraesDB db = new MoraesDB("database.json");
         Table table = db.table("USUARIO");
-        table.delete(new Where("USUARIO", "GABRIEL"));
+        table.delete(new Where("USUARIO").equal("GABRIEL"));
     }
     
 }
