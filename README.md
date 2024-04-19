@@ -65,10 +65,14 @@ public class ExemploSelect {
         System.out.println(js);
 
         //Exemplo de uso com Where
-        js = table.select(new Where("CODIGO").equalThan(1).and(new Where("NOME").equalThan("GABRIEL MORAES")));
+        js = table.select(
+                new Where("CODIGO").equalThan(1).and(
+                        new Where("NOME").equalThan("GABRIEL MORAES")));
         System.out.println(js);
 
-        js = table.select(new Where("NUMERO").lessThan(6.0).and(new Where("CODIGO").equalThan(2)));
+        js = table.select(
+                new Where("NUMERO").lessThan(6.0).and(
+                        new Where("CODIGO").equalThan(2)));
         System.out.println(js);
     }
 
@@ -79,4 +83,27 @@ public class ExemploSelect {
 Exemplo de delete
 
 ```java
+import database.MoraesDB;
+import database.Table;
+import database.Where;
+import java.io.IOException;
+
+public class ExemploDelete {
+
+    public static void main(String[] args) throws IOException {
+
+        //Criar uma instancia do banco
+        MoraesDB db = new MoraesDB("database.json");
+
+        //Cria ou Localiza uma tabela no banco de dados
+        Table table = db.table("USUARIO");
+
+        //Delete sem where apaga todo os dados da tabela
+        table.delete();
+
+        //Exemplo de delete com where
+        table.delete(new Where("USUARIO").equalThan("GABRIEL"));
+    }
+
+}
 ```
