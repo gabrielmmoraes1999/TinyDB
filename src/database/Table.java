@@ -256,15 +256,59 @@ public class Table {
                 case "=":
                     this.dataTable.keySet().forEach(keyData -> {
                         JSONObject row = this.dataTable.getJSONObject(keyData);
-
-                        if (wh.getValue().equals(row.get(wh.getField()))) {
-                            this.dataTable.remove(keyData);
+                        
+                        if (wh.getValue().getClass() == Integer.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (int) a == (int) b);
+                        } else if (wh.getValue().getClass() == Double.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
+                        } else {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> a.equals(b));
                         }
                     });
                     break;
                 case "<":
+                    this.dataTable.keySet().forEach(keyData -> {
+                        JSONObject row = this.dataTable.getJSONObject(keyData);
+                        
+                        if (wh.getValue().getClass() == Integer.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (int) a < (int) b);
+                        } else if (wh.getValue().getClass() == Double.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (Double) a < (Double) b);
+                        }
+                    });
+                    break;
+                case "<=":
+                    this.dataTable.keySet().forEach(keyData -> {
+                        JSONObject row = this.dataTable.getJSONObject(keyData);
+                        
+                        if (wh.getValue().getClass() == Integer.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (int) a <= (int) b);
+                        } else if (wh.getValue().getClass() == Double.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (Double) a <= (Double) b);
+                        }
+                    });
                     break;
                 case ">":
+                    this.dataTable.keySet().forEach(keyData -> {
+                        JSONObject row = this.dataTable.getJSONObject(keyData);
+                        
+                        if (wh.getValue().getClass() == Integer.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (int) a > (int) b);
+                        } else if (wh.getValue().getClass() == Double.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (Double) a > (Double) b);
+                        }
+                    });
+                    break;
+                case ">=":
+                    this.dataTable.keySet().forEach(keyData -> {
+                        JSONObject row = this.dataTable.getJSONObject(keyData);
+                        
+                        if (wh.getValue().getClass() == Integer.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (int) a >= (int) b);
+                        } else if (wh.getValue().getClass() == Double.class) {
+                            Util.remove(this.dataTable, keyData, row, wh, (a, b) -> (Double) a >= (Double) b);
+                        }
+                    });
                     break;
             }
         }
