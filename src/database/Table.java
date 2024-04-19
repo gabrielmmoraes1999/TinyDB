@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,16 +61,50 @@ public class Table {
                     switch (wh.getOperator()) {
                         case "=":
                             list.forEach(row -> {
-                                if (!wh.getValue().equals(row.get(wh.getField()))) {
-                                    if (!remove.contains(row)) {
-                                        remove.add(row);
-                                    }
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (int) a == (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
+                                } else {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> a.equals(b));
                                 }
                             });
                             break;
                         case "<":
+                            list.forEach(row -> {
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (int) a >= (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (Double) a >= (Double) b);
+                                }
+                            });
+                            break;
+                        case "<=":
+                            list.forEach(row -> {
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (int) a > (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (Double) a > (Double) b);
+                                }
+                            });
                             break;
                         case ">":
+                            list.forEach(row -> {
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (int) a <= (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (Double) a <= (Double) b);
+                                }
+                            });
+                            break;
+                        case ">=":
+                            list.forEach(row -> {
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (int) a < (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareRemove(remove, row, wh, (a, b) -> (Double) a < (Double) b);
+                                }
+                            });
                             break;
                         default:
                             break;
@@ -81,16 +116,58 @@ public class Table {
                             fullData.keySet().forEach(keyData -> {
                                 JSONObject row = fullData.getJSONObject(keyData);
 
-                                if (wh.getValue().equals(row.get(wh.getField()))) {
-                                    if (!list.contains(row)) {
-                                        list.add(row);
-                                    }
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a == (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
+                                } else {
+                                    Util.compareAdd(list, row, wh, (a, b) -> a.equals(b));
                                 }
                             });
                             break;
                         case "<":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a < (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a < (Double) b);
+                                }
+                            });
+                            break;
+                        case "<=":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a <= (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a <= (Double) b);
+                                }
+                            });
                             break;
                         case ">":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a > (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a > (Double) b);
+                                }
+                            });
+                            break;
+                        case ">=":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a >= (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a >= (Double) b);
+                                }
+                            });
                             break;
                         default:
                             break;
@@ -102,16 +179,58 @@ public class Table {
                             fullData.keySet().forEach(keyData -> {
                                 JSONObject row = fullData.getJSONObject(keyData);
 
-                                if (wh.getValue().equals(row.get(wh.getField()))) {
-                                    if (!list.contains(row)) {
-                                        list.add(row);
-                                    }
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a == (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
+                                } else {
+                                    Util.compareAdd(list, row, wh, (a, b) -> a.equals(b));
                                 }
                             });
                             break;
                         case "<":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a < (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a < (Double) b);
+                                }
+                            });
+                            break;
+                        case "<=":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a <= (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a <= (Double) b);
+                                }
+                            });
                             break;
                         case ">":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a > (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a > (Double) b);
+                                }
+                            });
+                            break;
+                        case ">=":
+                            fullData.keySet().forEach(keyData -> {
+                                JSONObject row = fullData.getJSONObject(keyData);
+
+                                if (wh.getValue().getClass() == Integer.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (int) a >= (int) b);
+                                } else if (wh.getValue().getClass() == Double.class) {
+                                    Util.compareAdd(list, row, wh, (a, b) -> (Double) a >= (Double) b);
+                                }
+                            });
                             break;
                         default:
                             break;

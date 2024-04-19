@@ -26,6 +26,9 @@ public class ExemploSelect {
 
         js = table.select(new Where("CODIGO").equalThan(1).and(new Where("NOME").equalThan("GABRIEL MORAES")));
         System.out.println(js);
+        
+        js = table.select(new Where("NUMERO").lessThan(6.0).and(new Where("CODIGO").equalThan(2)));
+        System.out.println(js);
     }
 
 }

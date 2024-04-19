@@ -31,23 +31,35 @@ public class Where {
         return this;
     }
 
+    public Where greaterOrEqualThan(Object value) {
+        this.operator = ">=";
+        this.value = value;
+        return this;
+    }
+
     public Where lessThan(Object value) {
         this.operator = "<";
         this.value = value;
         return this;
     }
 
+    public Where lessOrEqualThan(Object value) {
+        this.operator = "<=";
+        this.value = value;
+        return this;
+    }
+
     public Where[] and(Where where) {
         this.vector[0] = this;
-        
+
         where.setCondition("AND");
         this.vector[1] = where;
         return vector;
     }
-    
+
     public Where[] or(Where where) {
         this.vector[0] = this;
-        
+
         where.setCondition("OR");
         this.vector[1] = where;
         return vector;

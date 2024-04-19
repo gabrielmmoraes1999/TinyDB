@@ -20,10 +20,11 @@ public class ExemploInsert {
         Table table = db.table("USUARIO");
         
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("CODIGO", 2);
+        jsonObj.put("CODIGO", 1);
         jsonObj.put("NOME", "GABRIEL MORAES");
         jsonObj.put("USUARIO", "GABRIEL");
         jsonObj.put("STATUS", true);
+        jsonObj.put("NUMERO", 5.0);
         table.insert(jsonObj);
         
         db.close();
