@@ -80,7 +80,7 @@ public class ExemploSelect {
 ```
 
 <br/>
-Exemplo de delete
+Exemplo de Delete
 
 ```java
 import database.MoraesDB;
