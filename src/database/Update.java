@@ -13,11 +13,10 @@ public class Update {
     List<JSONObject> list;
 
     protected Update(Table table, JSONObject obj, Where[] where) {
+        JSONObject json = table.getDataTable();
         list = new ArrayList<>();
 
         if (where.length == 0) {
-            JSONObject json = table.getDataTable();
-
             json.keySet().forEach(index -> {
                 JSONObject row = json.getJSONObject(index);
 
@@ -28,6 +27,31 @@ public class Update {
 
                 list.add(row);
             });
+        }
+        
+        for (Where wh : where) {
+            switch (wh.getCondition()) {
+                case "AND":
+                    break;
+                case "OR":
+                    break;
+                default:
+                    switch (wh.getOperator()) {
+                        case "=":
+                            break;
+                        case "<":
+                            break;
+                        case "<=":
+                            break;
+                        case ">":
+                            break;
+                        case ">=":
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+            }
         }
     }
 
