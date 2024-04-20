@@ -45,6 +45,10 @@ public class Table {
         return new Select(this, where).getResult();
     }
 
+    public List<JSONObject> update(JSONObject obj, Where... where) {
+        return new Update(this, obj, where).getResult();
+    }
+
     public void delete(Where... where) {
         new Delete(this, where).toString();
     }
