@@ -28,7 +28,7 @@ public class Update {
                 list.add(row);
             });
         }
-        
+
         for (Where wh : where) {
             switch (wh.getCondition()) {
                 case "AND":
@@ -38,6 +38,24 @@ public class Update {
                 default:
                     switch (wh.getOperator()) {
                         case "=":
+                            json.keySet().forEach(index -> {
+                                JSONObject row = json.getJSONObject(index);
+
+                                row.keySet().forEach(colunmRow -> {
+                                    if (wh.getField().equals(colunmRow)) {
+                                        if (wh.getValue().equals(row.get(colunmRow))) {
+                                            obj.keySet().forEach(colunmObj -> {
+                                                row.get(colunmObj);
+                                                row.put(colunmObj, obj.get(colunmObj));
+                                            });
+
+                                            if (!list.contains(row)) {
+                                                list.add(row);
+                                            }
+                                        }
+                                    }
+                                });
+                            });
                             break;
                         case "<":
                             break;
