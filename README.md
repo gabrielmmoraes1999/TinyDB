@@ -1,6 +1,6 @@
-# MoraesDB
+# TinyDB
 
-MoraesDB é uma lib para criar e manipular um banco de dados com base em um arquivo json.
+TinyDB é uma lib para criar e manipular um banco de dados com base em um arquivo json.
 
 # Exemplo de uso
 
@@ -8,7 +8,7 @@ MoraesDB é uma lib para criar e manipular um banco de dados com base em um arqu
 Exemplo de Insert.
 
 ```java
-import database.MoraesDB;
+import database.TinyDB;
 import database.Table;
 import java.io.IOException;
 import org.json.JSONObject;
@@ -18,7 +18,7 @@ public class ExemploInsert {
     public static void main(String[] args) throws IOException {
 
         //Criar uma instancia do banco
-        MoraesDB db = new MoraesDB("database.json");
+        TinyDB db = new TinyDB("database.json");
 
         //Cria ou Localiza uma tabela no banco de dados
         Table table = db.table("USUARIO");
@@ -43,7 +43,7 @@ public class ExemploInsert {
 Exemplo de Select
 
 ```java
-import database.MoraesDB;
+import database.TinyDB;
 import database.Table;
 import database.Where;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class ExemploSelect {
     public static void main(String[] args) throws IOException {
 
         //Criar uma instancia do banco
-        MoraesDB db = new MoraesDB("database.json");
+        TinyDB db = new TinyDB("database.json");
 
         //Cria ou Localiza uma tabela no banco de dados
         Table table = db.table("USUARIO");
@@ -83,7 +83,7 @@ public class ExemploSelect {
 Exemplo de Delete
 
 ```java
-import database.MoraesDB;
+import database.TinyDB;
 import database.Table;
 import database.Where;
 import java.io.IOException;
@@ -93,7 +93,7 @@ public class ExemploDelete {
     public static void main(String[] args) throws IOException {
 
         //Criar uma instancia do banco
-        MoraesDB db = new MoraesDB("database.json");
+        TinyDB db = new TinyDB("database.json");
 
         //Cria ou Localiza uma tabela no banco de dados
         Table table = db.table("USUARIO");
