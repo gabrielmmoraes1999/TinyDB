@@ -38,7 +38,7 @@ public class Select {
                                 } else if (wh.getValue().getClass() == Double.class) {
                                     Util.compareRemove(remove, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
                                 } else {
-                                    Util.compareRemove(remove, row, wh, (a, b) -> a.equals(b));
+                                    Util.compareRemove(remove, row, wh, Object::equals);
                                 }
                             });
                             break;
@@ -156,7 +156,7 @@ public class Select {
                                 } else if (wh.getValue().getClass() == Double.class) {
                                     Util.compareAdd(list, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
                                 } else {
-                                    Util.compareAdd(list, row, wh, (a, b) -> a.equals(b));
+                                    Util.compareAdd(list, row, wh, Object::equals);
                                 }
                             });
                             break;
@@ -211,10 +211,7 @@ public class Select {
             }
         }
 
-        remove.forEach((row) -> {
-            list.remove(row);
-        });
-
+        remove.forEach(list::remove);
         return list;
     }
 }

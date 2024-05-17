@@ -8,6 +8,7 @@ public class Delete {
 
     protected Delete(Table table, Where[] where) {
         if (where.length == 0) {
+            table.resetIndex();
             table.getDataTable().clear();
         }
 
@@ -22,7 +23,7 @@ public class Delete {
                         } else if (wh.getValue().getClass() == Double.class) {
                             Util.remove(table.getDataTable(), keyData, row, wh, (a, b) -> Objects.equals((Double) a, (Double) b));
                         } else {
-                            Util.remove(table.getDataTable(), keyData, row, wh, (a, b) -> a.equals(b));
+                            Util.remove(table.getDataTable(), keyData, row, wh, Objects::equals);
                         }
                     });
                     break;

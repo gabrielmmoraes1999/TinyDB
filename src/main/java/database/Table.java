@@ -3,7 +3,6 @@ package database;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +12,6 @@ public class Table {
     private int index;
     private final String name;
     private final JSONObject data;
-    private final JSONObject table;
     private JSONObject dataTable;
 
     public Table(TinyDB db, String name) {
@@ -28,11 +26,9 @@ public class Table {
         }
 
         this.data.put(name, dataTable);
-        this.table = new JSONObject();
-        this.table.put(name, dataTable);
     }
 
-    public Integer insert(JSONObject obj) throws IOException {
+    public Integer insert(JSONObject obj) {
         String indexNext = String.valueOf(this.nextIndex());
         dataTable.put(indexNext, obj);
         return Integer.valueOf(indexNext);
@@ -53,6 +49,10 @@ public class Table {
     private int nextIndex() {
         this.index++;
         return index;
+    }
+
+    protected void resetIndex() {
+        this.index = 0;
     }
 
     private Integer getLastIndex() {
